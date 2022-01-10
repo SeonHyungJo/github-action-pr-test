@@ -22,7 +22,7 @@ jobs:
           echo head_ref is ${{github.head_ref}}
           echo token is ${{github.token}}
           echo ref is ${{github.ref}}
-          echo github is ${{github}}
+          echo github is ${{JSON.stringify(github)}}
           yarn install 
           yarn test
       - name: if fail
