@@ -38,10 +38,4 @@ jobs:
               body:"테스트 코드를 확인해주세요. ",
               event: "REQUEST_CHANGES"
             })
-
-            # await github.pulls.update({
-            #   ...context.repo,
-            #   pull_number,
-            #   state: "closed"
-            # })
         if: failure()
