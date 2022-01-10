@@ -15,7 +15,7 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v2
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.head_ref }}
       - name: run test
         run: |
           echo base_ref is ${{github.base_ref}}
