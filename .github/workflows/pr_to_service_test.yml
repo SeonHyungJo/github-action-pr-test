@@ -13,11 +13,17 @@ jobs:
     runs-on: [ubuntu-latest]
     steps:
       - name: checkout repo
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
       - name: run test
         run: |
           echo base_ref is ${{github.base_ref}}
           echo head_ref is ${{github.head_ref}}
+          echo token is ${{github.token}}
+          echo ref is ${{github.ref}}
+          yarn install 
+          yarn test
       - name: if fail
         uses: actions/github-script@0.2.0
         with:
