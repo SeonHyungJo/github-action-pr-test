@@ -35,13 +35,13 @@ jobs:
             await github.pulls.createReview({
               ...context.repo,
               pull_number,
-              body:"테스트 코드를 다시 확인해주세요. ",
+              body:"@SeonHyungJo 테스트 코드를 다시 확인해주세요. ",
               event: "REQUEST_CHANGES"
             })
 
-            await github.pulls.update({
-              ...context.repo,
-              pull_number,
-              state: "closed"
-            })
+            # await github.pulls.update({
+            #   ...context.repo,
+            #   pull_number,
+            #   state: "closed"
+            # })
         if: failure()
