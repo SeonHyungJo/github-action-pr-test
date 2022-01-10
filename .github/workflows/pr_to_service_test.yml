@@ -1,0 +1,41 @@
+# 서비스 브랜치에 PR을 보낼 경우 해당 서비스만 테스트를 실행한다.
+name: PR Test [Service]
+
+on:
+  pull_request:
+    types: [opened, reopened]
+    paths:
+      - 'libs/**
+
+jobs:
+  TestService:
+    name: Test Current Service
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@master
+      - name: run test
+        run: |
+          echo base_ref is ${{github.base_ref}}
+          echo head_ref is ${{github.head_ref}}
+      - name: if fail
+        uses: actions/github-script@0.2.0
+        with:
+          github-token: ${{github.token}}
+          script: |
+            const ref = "${{github.ref}}"
+            const pull_number = Number(ref.split("/")[2])
+
+            await github.pulls.createReview({
+              ...context.repo,
+              pull_number,
+              body:"테스트 코드를 다시 확인해주세요. ",
+              event: "REQUEST_CHANGES"
+            })
+
+            await github.pulls.update({
+              ...context.repo,
+              pull_number,
+              state: "closed"
+            })
+        if: failure()
