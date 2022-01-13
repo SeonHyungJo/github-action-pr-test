@@ -18,6 +18,7 @@ jobs:
           ref: ${{ github.head_ref }}
       - name: run test
         run: |
+          echo base_ref is ${{toJSON(github)}}
           echo base_ref is ${{github.base_ref}}
           echo head_ref is ${{github.head_ref}}
           echo token is ${{github.token}}
